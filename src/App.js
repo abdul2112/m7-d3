@@ -1,43 +1,53 @@
-import './App.css';
-import { Component } from 'react';
-import { Button, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import HomePage from './components/HomePage';
-import CompanySearchResult from './components/CompanySearchResult';
+import './App.css';
+import SearchCompany from './components/SearchCompany';
+import SearchJob from './components/SearchJob';
 import Favourites from './components/Favourites';
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <Container>
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <h1
-              xs={10}
-              className="mx-auto my-3"
-              style={{ textAlign: 'center' }}
-            >
-              Job search
-            </h1>
-          </Link>
-          <Button className="Favourite-button btn btn-dark">
-            <Link
-              to="/favourites"
-              className="text-white"
-              style={{ textDecoration: 'none' }}
-            >
-              Favourites
-            </Link>
-          </Button>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/:companyName" component={CompanySearchResult} />
-          <Route exact path="/favourites" component={Favourites} />
-          {/* <Route path="/" exact render={(routerProps) => <BookStore {...routerProps} addToCart={this.addToCart} />} /> */}
-          {/* <Route path="/cart" exact render={(routerProps) => ( <Cart {...routerProps} cart={this.state.cart} removeFromCart={this.removeFromCart} /> )} /> */}
-        </Container>
-      </Router>
-    );
-  }
+import { Container, Button, Row } from 'react-bootstrap';
+import CompanySearchResults from './components/CompanySearchResults';
+import { Route, Switch, Link } from 'react-router-dom';
+
+function App() {
+  return (
+    <>
+      <Button className="Favourite-button btn btn-dark">
+        <Link
+          to="/favourites"
+          className="text-white"
+          style={{ textDecoration: 'none' }}
+        >
+          Favourites
+        </Link>
+      </Button>
+      <Button className="Favourite-button btn btn-dark">
+        <Link to="/" className="text-white" style={{ textDecoration: 'none' }}>
+          Search for job
+        </Link>
+      </Button>
+      <Button className="Favourite-button btn btn-dark">
+        <Link
+          to="/search-company"
+          className="text-white"
+          style={{ textDecoration: 'none' }}
+        >
+          Search by Company
+        </Link>
+      </Button>
+      <Container>
+        <Row>
+          <Switch>
+            <Route exact path="/search-company" component={SearchCompany} />
+            <Route exact path="/" component={SearchJob} />
+            <Route
+              path="/company-detail/:companyName"
+              component={CompanySearchResults}
+            />
+            <Route exact path="/favourites" component={Favourites} />
+          </Switch>
+        </Row>
+      </Container>
+    </>
+  );
 }
 
 export default App;

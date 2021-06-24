@@ -1,16 +1,16 @@
 import { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-// import { Container } from 'react-bootstrap/Container';
-// import { Row } from 'react-bootstrap/Row';
-// import { Col } from 'react-bootstrap/Col';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 import { connect } from 'react-redux';
-import { addJobToFavouritesAction } from '../actions';
+import { removeJobFromFavouriteAction } from '../actions';
 
 const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
-  addFavourites: (job) => {
-    dispatch(addJobToFavouritesAction(job));
+  removeFromFavourite: (job) => {
+    dispatch(removeJobFromFavouriteAction(job));
   },
 });
 
@@ -18,12 +18,30 @@ class Favourites extends Component {
   render() {
     return (
       <Container>
-        <Row>
-          <Col> Title </Col>
-          <Col> Company Name </Col>
-          <Col> Category </Col>
-          <Col> Job Type </Col>
-        </Row>
+        <h1>Favourites</h1>
+        {this.props.favouriteJobs.map((job, index) => (
+          <Row>
+            <Col> {job.title} </Col>
+            <Col> {job.company_name} </Col>
+            <Col> {job.category} </Col>
+            <Col> {job.job_type} </Col>
+            <Col>
+              <Link to={`/company-detail/${job.company_name}`}>
+                {job.company_name}
+              </Link>
+            </Col>
+            <Col>
+              <Button
+                className="btn btn-dark"
+                style={{ textDecoration: 'none' }}
+                onClick={() => this.props.removeFromFavourite(index)}
+              >
+                Delete
+              </Button>
+            </Col>
+            <hr />
+          </Row>
+        ))}
       </Container>
     );
   }

@@ -1,20 +1,20 @@
-import { Component } from 'react';
+import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import JobDetail from './JobDetail';
+import Job from './Job';
 import uniqid from 'uniqid';
 
-class CompanySearchResult extends Component {
+class CompanySearchResults extends React.Component {
   state = {
     jobs: [],
   };
 
   componentDidMount() {
-    this.getJobs();
+    this.getJobsByCompanyName();
   }
 
   baseEndpoint = 'https://remotive.io/api/remote-jobs?company_name=';
 
-  getJobs = async () => {
+  getJobsByCompanyName = async () => {
     const response = await fetch(
       this.baseEndpoint + this.props.match.params.companyName
     );
@@ -29,7 +29,7 @@ class CompanySearchResult extends Component {
         <Row>
           <Col>
             {this.state.jobs.map((jobData) => (
-              <JobDetail key={uniqid()} data={jobData} />
+              <Job key={uniqid()} data={jobData} />
             ))}
           </Col>
         </Row>
@@ -38,4 +38,4 @@ class CompanySearchResult extends Component {
   }
 }
 
-export default CompanySearchResult;
+export default CompanySearchResults;

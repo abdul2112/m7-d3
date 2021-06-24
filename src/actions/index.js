@@ -1,6 +1,9 @@
-// here I write my action creators
-// functions that return actions
-export const addJobToFavouritesAction = (job) => ({
-  type: 'ADD_JOB_TO_FAVOURITES',
+export const addJobToFavouriteAction = (job) => ({
+  type: 'ADD_JOB_TO_FAVOURITE',
   payload: job,
+});
+
+export const removeJobFromFavouriteAction = (index) => ({
+  type: 'REMOVE_JOB_FROM_FAVOURITE',
+  payload: index,
 });
